@@ -6,7 +6,7 @@ Realizza una rubrica contatti interamente in React, gestendo tutto lato frontend
 
 ## 🚀 Funzionalità principali
 
-- Visualizzare una lista di contatti
+- Visualizzare una lista di contatti ✅
 - Aggiungere un nuovo contatto
 - Modificare un contatto esistente
 - Eliminare un contatto

@@ -2,8 +2,6 @@
 //Impoto icone 
 import { IoIosSearch } from "react-icons/io";
 
-
-
 export default function SectionUpMain() {
   return (
     <div className=" mt-[50px] flex justify-center">

@@ -42,7 +42,8 @@ export default function SectionDownMain() {
                 {/* Section 1 */}
                 <section className="flex justify-between ">
                   <img src={contact.picture} alt="Foto random" className="h-[50px] w-[50px] rounded-full object-cover" />
-                  <h2 className="flex flex-col font-bold">{contact.name} <span className="text-[12px] font-normal">{contact.category}</span></h2>
+                  <h2 className="flex flex-col font-bold">{contact.name} {contact.surname} <span className="text-[12px] font-normal">{contact.category}</span>
+                  <span className="text-[12px] font-bold">{contact.gender.charAt(0).toUpperCase() + contact.gender.slice(1).toLowerCase()}</span></h2>
                   <CiStar size={35} className=" p-1 rounded-md text-zinc-400" />
                 </section>
 

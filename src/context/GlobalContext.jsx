@@ -46,10 +46,8 @@ export default function GlobalProvider({ children }) {
         fetchContact()
     }, [])
 
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     // Controllo se i dati ci sono e se parte da arr vuoto prima che abbiamo i dati
     if (!dataContact || dataContact.length === 0) return <div className="flex justify-center mt-[50px] font-bold">CARICAMENTO...</div>
 
@@ -68,16 +66,26 @@ export default function GlobalProvider({ children }) {
 
     //Formattiamo i dati ricevuti dove andremo a ricavarci solo le proprieta che davvero ci servono
     const dataContactMappato = dataContact.map((contact, index) => {
+        //Verifico se  c'e gia la categoria altrimenti mi rimani quella che ho definito io
+        const category = contact.category ? contact.category : categoryUser(index)
+
         return {
             id: index + 1,
-            name: Object.values(contact.name).slice(-2).join(" "),
+            name: contact.name.first,
+            surname: contact.name.last,
             gender: contact.gender,
             email: contact.email,
             cell: contact.cell.split(" ").join("-"),
             picture: contact.picture.thumbnail,
-            category: categoryUser(index)
+            category
+
         }
     })
+
+    //Rimuovo i duplicati per la categoria 
+    const removeDuplicate = [...new Set(dataContactMappato.map(contact => contact.category))];
+    //Rimuovi duplicati per genere
+    const removeDuplicateGener = [...new Set(dataContactMappato.map(contact => contact.gender))]
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +100,9 @@ export default function GlobalProvider({ children }) {
             //variabile di stato
             dataContact, setDataContact, dataContactMappato,
             //input variabile con filtroName
-            inputSearch,setInputSearch,filtroName
+            inputSearch, setInputSearch, filtroName,
+            //removeDuplicate e genere
+            removeDuplicate, removeDuplicateGener
         }}>
             {children}
         </GlobalContext.Provider>

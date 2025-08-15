@@ -16,6 +16,8 @@ export default function GlobalProvider({ children }) {
 
     //1 Creiamo una variabile di stato per input inizializzandolo a stringa vuota
     const [inputSearch, setInputSearch] = useState("")
+    //Variabile per il select
+    const [selectInput, setSelectInput] = useState("")
     //2 Impostiamo il value dell input e fa funzione onChange per gestire il cambiamento dell input
 
 
@@ -95,18 +97,36 @@ export default function GlobalProvider({ children }) {
     // Filtro dei contatti
     const filtroNameSurname = dataContactMappato.filter(contact => {
 
+        let isCategoryMatch = false;
+
+        //filtriamo anche per categoria
+        if (selectInput === "") {
+            isCategoryMatch = true
+        } else if (selectInput === "Amico") {
+            isCategoryMatch = contact.category === "Amico"
+        } else if (selectInput === "Lavoro") {
+            isCategoryMatch = contact.category === "Lavoro"
+        } else if (selectInput === "Parente") {
+            isCategoryMatch = contact.category === "Parente"
+        }
+
+
+        let isSearchMatch = false;
+
         //condizione se searchWord.length e > 1 allora controlla 
         if (searchWords.length > 1) {
             // Se ci sono più parole, tutte devono matchare nome o cognome (AND)
-            return searchWords.every(word => contact.name.toLowerCase().includes(word) || contact.surname.toLowerCase().includes(word));
+            isSearchMatch = searchWords.every(word => contact.name.toLowerCase().includes(word) || contact.surname.toLowerCase().includes(word));
         } else {
             // Se c'è solo una parola, basta che una corrisponda (OR)
-            return searchWords.some(word => contact.name.toLowerCase().includes(word) || contact.surname.toLowerCase().includes(word));
+            isSearchMatch = searchWords.some(word => contact.name.toLowerCase().includes(word) || contact.surname.toLowerCase().includes(word));
         }
+
+
+        return isCategoryMatch && isSearchMatch
+
     });
 
-    
-    
 
     //Funzione per rimuovere un contatto
     function removeContact(contactId) {
@@ -120,8 +140,12 @@ export default function GlobalProvider({ children }) {
         <GlobalContext.Provider value={{
             //variabile di stato
             dataContact, setDataContact, dataContactMappato,
+
             //input variabile con filtroName
             inputSearch, setInputSearch, filtroNameSurname,
+            //select pr il filtrtaggio per categoria
+            selectInput, setSelectInput,
+
             //removeDuplicate e genere
             removeDuplicate, removeDuplicateGener,
 

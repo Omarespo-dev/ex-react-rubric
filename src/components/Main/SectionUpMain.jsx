@@ -9,7 +9,7 @@ import { GlobalContext } from "../../context/GlobalContext"
 export default function SectionUpMain() {
 
   //Prendo Dati dal Context
-  const { inputSearch,setInputSearch,removeDuplicate} = useContext(GlobalContext)
+  const { inputSearch,setInputSearch,removeDuplicate,selectInput, setSelectInput} = useContext(GlobalContext)
 
   return (
     <div className=" mt-[50px] flex justify-center">
@@ -26,7 +26,7 @@ export default function SectionUpMain() {
         </section>
 
         <section className="border-2 rounded-md border-zinc-300 flex p-2 text-black ">
-          <select name="" id="" >
+          <select name="" id="" value={selectInput} onChange={e => setSelectInput(e.target.value)}>
             <option value="">Tutti i contatti</option>
             {removeDuplicate.map(categ => (
               <option value={categ} key={categ}>{categ}</option>

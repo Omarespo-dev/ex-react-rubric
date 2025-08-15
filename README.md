@@ -9,7 +9,7 @@ Realizza una rubrica contatti interamente in React, gestendo tutto lato frontend
 - Visualizzare una lista di contatti ✅
 - Aggiungere un nuovo contatto✅
 - Modificare un contatto esistente❌
-- Eliminare un contatto❌
+- Eliminare un contatto⚠️ al refresh torna all arr originale per via della chiamata delete che non ho
 - Ricercare un contatto per nome in tempo reale✅
 - Salvare i contatti nel `localStorage` per mantenere i dati dopo il refresh❌
 - Caricare i dati iniziali dall’API pubblica `https://randomuser.me/api/?results=10&seed=reactcontacts`✅

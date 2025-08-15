@@ -70,13 +70,13 @@ export default function GlobalProvider({ children }) {
         const category = contact.category ? contact.category : categoryUser(index)
 
         return {
-            id: index + 1,
+            id: contact.login.uuid,
             name: contact.name.first,
             surname: contact.name.last,
             gender: contact.gender,
             email: contact.email,
             cell: contact.cell.split(" ").join("-"),
-            picture: contact.picture.thumbnail,
+            // picture: contact.picture.thumbnail,
             category
 
         }
@@ -89,10 +89,31 @@ export default function GlobalProvider({ children }) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //Ora da questi dati ricevuti dovremmo andare a filtrare per nome con la barra di ricerca in tempo reale 
-    const filtroName = dataContactMappato.filter(contact => {
-        return contact.name.toLowerCase().includes(inputSearch.toLowerCase().trim())
-    })
+    // Normalizzo l'input e lo divido in parole
+    const searchWords = inputSearch.trim().toLowerCase().split(" ");
+
+    // Filtro dei contatti
+    const filtroNameSurname = dataContactMappato.filter(contact => {
+
+        //condizione se searchWord.length e > 1 allora controlla 
+        if (searchWords.length > 1) {
+            // Se ci sono più parole, tutte devono matchare nome o cognome (AND)
+            return searchWords.every(word => contact.name.toLowerCase().includes(word) || contact.surname.toLowerCase().includes(word));
+        } else {
+            // Se c'è solo una parola, basta che una corrisponda (OR)
+            return searchWords.some(word => contact.name.toLowerCase().includes(word) || contact.surname.toLowerCase().includes(word));
+        }
+    });
+
+    
+    
+
+    //Funzione per rimuovere un contatto
+    function removeContact(contactId) {
+        setDataContact((prevArr) => {
+            return prevArr.filter(contact => contact.login.uuid !== contactId)
+        })
+    }
 
 
     return (
@@ -100,9 +121,12 @@ export default function GlobalProvider({ children }) {
             //variabile di stato
             dataContact, setDataContact, dataContactMappato,
             //input variabile con filtroName
-            inputSearch, setInputSearch, filtroName,
+            inputSearch, setInputSearch, filtroNameSurname,
             //removeDuplicate e genere
-            removeDuplicate, removeDuplicateGener
+            removeDuplicate, removeDuplicateGener,
+
+            //funzione rimuovi contact
+            removeContact
         }}>
             {children}
         </GlobalContext.Provider>

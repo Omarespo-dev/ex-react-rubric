@@ -14,10 +14,10 @@ import { GlobalContext } from "../../context/GlobalContext"
 
 export default function SectionDownMain() {
 
-  const { filtroName, setDataContact } = useContext(GlobalContext)
+  const { filtroNameSurname, setDataContact, removeContact } = useContext(GlobalContext)
 
   //dati filtrati
-  console.log(filtroName)
+  console.log(filtroNameSurname)
 
   return (
     <div className="flex justify-center mt-[50px] ">
@@ -36,8 +36,8 @@ export default function SectionDownMain() {
         {/* Card */}
         <div className="w-full flex gap-4 justify-center items-center flex-wrap mt-[50px]">
 
-          {filtroName.length > 0 ?
-            filtroName.map(contact => (
+          {filtroNameSurname.length > 0 ?
+            filtroNameSurname.map(contact => (
               <div className=" w-[260px] p-2 border-2 rounded-xl border-zinc-300" key={contact.id}>
                 {/* Section 1 */}
                 <section className="flex justify-between ">
@@ -60,7 +60,7 @@ export default function SectionDownMain() {
                     <p className="flex items-center gap-1 text-[10px] text-blue-500 font-bold"><IoCreateOutline size={17} />Modifica</p>
                   </section>
 
-                  <section className="bg-red-200 w-[50%]  p-1 rounded-xl flex justify-center items-center cursor-pointer">
+                  <section className="bg-red-200 w-[50%]  p-1 rounded-xl flex justify-center items-center cursor-pointer" onClick={() => removeContact(contact.id)}>
                     <p className="flex items-center gap-1 text-[10px] text-red-500 font-bold"><MdDeleteOutline size={17} />Elimina</p>
                   </section>
                 </section>

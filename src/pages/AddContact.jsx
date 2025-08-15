@@ -36,14 +36,15 @@ export default function AddContact() {
 
     //Contatto da aggiungere deve essere uguale a quello mappato che abbiamo nel contex
     const newContact = {
-      name: { first: formData.name },
-      surname: { last: formData.surname },
+      //inventa id univoco
+      login: { uuid: crypto.randomUUID() },
+      name: { first: formData.name, last: formData.surname},
       gender: formData.gender,
       email: formData.email,
       cell: formData.cell.split(" ").join("-"),
       category: formData.category
     }
-
+    
 
     setDataContact((prevArr) => {
       return [...prevArr, newContact]
